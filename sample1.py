@@ -41,7 +41,7 @@ def GetEntryValue(event):
 	
 
 #ボタン
-button = tkinter.Button(text="py/tkinter",foreground="white",background="red",border="5px")
+button = tkinter.Button(text="py/tkinter",foreground="white",background="red",border="4")
 
 ## オブジェクト作成後にオプションを設定、変更する場合はobj.configure(option=setting)
 #button.configure(state='disable')
@@ -62,17 +62,39 @@ def GetCheckbuttonVal():
 	Checkbuttonの設定値はオブジェクトから取得することはできない。
 	オブジェクトのvariableオプションに代入している変数から直接get()で取得する必要がある。
 	'''
-	if var.get() == 1:
-		print("checked")
-	else:
-		print("unchecked")
+	# if var_box1.get() == 1:
+		# print("v_1 is checked")
+	# else:
+		# print("v_1 is unchecked")
+
+	# if var_box2.get() == 1:
+		# print("v_2 is checked")
+	# else:
+		# print("v_2 is unchecked")
 
 #チェックボックス(tkではCheckbuttonと呼ぶ)
 ##Checkbuttonの設定値はtkinterオブジェクト(～Var())を使用する必要がある。
-var = tkinter.IntVar()
-chkbtn = tkinter.Checkbutton(text="check1",variable=var,command=GetCheckbuttonVal)
-chkbtn.pack()
+var_box1 = tkinter.IntVar()
+var_box2 = tkinter.IntVar()
 
+chkbtn_1 = tkinter.Checkbutton(text="check1",variable=var_box1,command=GetCheckbuttonVal)
+chkbtn_2 = tkinter.Checkbutton(text="check2",variable=var_box2,command=
+GetCheckbuttonVal)
+
+chkbtn_1.pack()
+chkbtn_2.pack()
+
+#ラジオボタン
+'''
+tkinter.Radiobuttonのvariableオプションの値が一致するものがグループ化される。
+valueオプションには数字を指定し、「0」がON、「1」がOFF
+'''
+category = tkinter.IntVar()
+radiobtn_1 = tkinter.Radiobutton(text="radio1",variable=category,value=0)
+radiobtn_2 = tkinter.Radiobutton(text="radio2",variable=category,value=1)
+
+radiobtn_1.pack(side='left')
+radiobtn_2.pack(side='right')
 
 
 #-------- FIXED -----------
