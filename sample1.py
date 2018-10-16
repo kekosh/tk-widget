@@ -4,26 +4,26 @@ import tkinter
 #-------- FIXED -----------
 root = tkinter.Tk()
 root.title("Sample1")
-root.geometry("250x150")
+root.geometry("250x300")
 #-------- FIXED -----------
 
 #ラベル
 label = tkinter.Label(text="label")
-label.pack()
+label.pack(padx=5,pady=5)
 
-#Entry（一行入力）
+#Entry（一行入力widget）
 ## insert(デフォルト入力として代用)
 entry_input = tkinter.Entry()
 entry_input.insert(tkinter.END,"default")
-entry_input.pack()
+entry_input.pack(pady=2)
 
 ## show(password blind)
 entry_showtype = tkinter.Entry(show="*",width=20)
-entry_showtype.pack()
+entry_showtype.pack(pady=2)
 
 ## state（normal or readonly）
 entry_state = tkinter.Entry(state="normal",width=20)
-entry_state.pack()
+entry_state.pack(pady=5)
 
 ##ボタン押下時の処理
 def GetEntryValue(event):
@@ -53,7 +53,7 @@ keybindの参考URL
 http://www.rouge.gr.jp/~fuku/tips/python-tkinter/bind.shtml
 '''
 button.bind("<Button-1>",GetEntryValue)
-button.pack()
+button.pack(fill="both",pady=10)
 #button.place(x=95,y=75)
 
 #Checkbutton変更時の処理
@@ -77,12 +77,20 @@ def GetCheckbuttonVal():
 var_box1 = tkinter.IntVar()
 var_box2 = tkinter.IntVar()
 
-chkbtn_1 = tkinter.Checkbutton(text="check1",variable=var_box1,command=GetCheckbuttonVal)
-chkbtn_2 = tkinter.Checkbutton(text="check2",variable=var_box2,command=
+#フレーム
+'''
+Frame-Widget内にwidgetを表示する場合は、子widgetのparentオプションに親となるFrame-widgetを
+指定する。
+'''
+frame = tkinter.Frame(width=250,height=100,borderwidth=1,relief="groove")
+
+chkbtn_1 = tkinter.Checkbutton(frame,text="check1",variable=var_box1,command=GetCheckbuttonVal)
+chkbtn_2 = tkinter.Checkbutton(frame,text="check2",variable=var_box2,command=
 GetCheckbuttonVal)
 
-chkbtn_1.pack()
-chkbtn_2.pack()
+chkbtn_1.pack(side="left",padx=10)
+chkbtn_2.pack(side="right",padx=10)
+frame.pack()
 
 #ラジオボタン
 '''
