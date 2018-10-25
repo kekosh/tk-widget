@@ -20,11 +20,11 @@ class Application(tk.Frame):
 		if event is None:
 			pass
 		else:
-			if event.widget["text"]=="押した":
-				event.widget["text"]="Click!!"
+			if event.widget["text"]=="click_after":
+				event.widget["text"] = "click_before"
 			else:
-				event.widget["text"] = "押した"
-			
+				event.widget["text"] = "click_after"
+		
 	def createWidget(self):
 		#自クラス内のクラスメソッドを使用する際は「self.<method>」で記載する
 		
@@ -40,7 +40,7 @@ class Application(tk.Frame):
 		#btn_click = tk.Button(text="Click",command=self.clicked)
 		
 		##bind
-		btn_click = tk.Button(text="click[bind]")
+		btn_click = tk.Button(text="click_before")
 		btn_click.bind("<Button-1>",self.clicked)
 		
 		##lambda pattern [lambda arg: method(arg)]
