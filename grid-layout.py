@@ -15,16 +15,19 @@ class Application(tk.Frame):
 		
 	def clicked(self,event=None):
 		#messagebox.<windowType>([title],[message]))
-		messagebox.showinfo("message window","Click!!")
+		#選択したボタンを判別する場合(Dialogresult)は呼び出しを直接変数に入れる
+		#[Bug]messageboxを表示するとボタンが押下後もへこんだままとなる
+		#dialigresult = messagebox.showinfo("message window","Click!!")
+		#print(dialigresult)
 		
 		if event is None:
-			pass
+			print("no event")
 		else:
 			if event.widget["text"]=="click_after":
 				event.widget["text"] = "click_before"
 			else:
 				event.widget["text"] = "click_after"
-		
+
 	def createWidget(self):
 		#自クラス内のクラスメソッドを使用する際は「self.<method>」で記載する
 		
@@ -33,8 +36,7 @@ class Application(tk.Frame):
 		lb.insert(2,"KANAGAWA")
 		lb.insert(3,"OSAKA")
 		lb.insert(4,"HYOGO")
-		lb.grid(row=1,column=0,columnspan=4,pady=5)
-		
+		lb.grid(row=1,column=0,columnspan=4,pady=5)		
 		
 		## command
 		#btn_click = tk.Button(text="Click",command=self.clicked)

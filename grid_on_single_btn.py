@@ -13,7 +13,8 @@ class app(tk.Frame):
 	
 	def clicked(self,event):
 		messagebox.showinfo("info","Btn is Clicked")
-	
+		return
+		
 	def createWidgets(self):
 		plane_btn = tk.Button(text="Button")
 		plane_btn.bind("<Button-1>",self.clicked)
