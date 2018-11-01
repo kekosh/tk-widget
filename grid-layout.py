@@ -60,7 +60,8 @@ class Application(tk.Frame):
 		btn_quit = tk.Button(text="Quit",command=quit)
 		btn_quit.grid(row=0,column=1,padx=5,ipadx=20)
 		
-
+		lb = tk.Label(text=0)
+		lb.grid(row=5,column=1)
 
 app = Application()
 app.mainloop()	

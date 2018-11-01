@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 
 #引数にtk.Frameは必須
-class app(tk.Frame):
+class Application(tk.Frame):
 	#コンストラクタ
 	#master は親Widgetを指す
 	def __init__(self,master=None):
@@ -23,6 +23,6 @@ class app(tk.Frame):
 		quitbtn = tk.Button(text="Quit",command=quit)
 		quitbtn.grid(row=1,column=2)
 
-app = app()
+app = Application()
 app.master.title("Sample App")
 app.mainloop()
