@@ -9,11 +9,16 @@ class Application(tk.Frame):
 		self.master.title("grid-layout")
 		self.createWidget()
 
-	# def clicked(self):
+	def clicked_by_command(self,arg):
+		pass
 		# #messagebox.<windowType>([title],[message]))
-		# messagebox.showinfo("message window","Click!!")
+		dialogresult = messagebox.showinfo("message window","Click!!")
 		
-	def clicked(self,event=None):
+		if dialogresult:
+			pass
+			print(arg)
+	def clicked_by_bind(self,event=None):
+	
 		#messagebox.<windowType>([title],[message]))
 		#選択したボタンを判別する場合(Dialogresult)は呼び出しを直接変数に入れる
 		#[Bug]messageboxを表示するとボタンが押下後もへこんだままとなる
@@ -29,8 +34,7 @@ class Application(tk.Frame):
 				event.widget["text"] = "click_after"
 
 	def createWidget(self):
-		#自クラス内のクラスメソッドを使用する際は「self.<method>」で記載する
-		
+		#自クラス内の別メソッドを使用する際は「self.<method>」で記載する
 		lb = tk.Listbox(selectmode=tk.MULTIPLE)
 		lb.insert(1,"TOKYO")
 		lb.insert(2,"KANAGAWA")
@@ -38,12 +42,15 @@ class Application(tk.Frame):
 		lb.insert(4,"HYOGO")
 		lb.grid(row=1,column=0,columnspan=4,pady=5)		
 		
-		## command
-		#btn_click = tk.Button(text="Click",command=self.clicked)
+		## ver.command
+		# Buttonウィジェットのcommandで呼び出すメソッドに引数を渡す場合は、lambda式を使用する必要がある。
+		#　lambda式を使わずにcommnadに引数つきの関数を渡すと、widget描画時に実行されてしまう。
+		btn_click = tk.Button(text="Click",
+			command=lambda:self.clicked_by_command("push by command option"))
 		
-		##bind
-		btn_click = tk.Button(text="click_before")
-		btn_click.bind("<Button-1>",self.clicked)
+		## ver.bind
+		# btn_click = tk.Button(text="click_before")
+		# btn_click.bind("<Button-1>",self.clicked_by_bind)
 		
 		##lambda pattern [lambda arg: method(arg)]
 		#→btn_click.bind("<Button-1>",lambda event:self.clicked(event))
