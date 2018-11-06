@@ -20,7 +20,7 @@ frame1.pack()
 
 frame2 = tk.Frame()
 ent = tk.Entry()
-ent.pack()
+ent.grid(row=0,column=1)
 
 def click_2():
     input_ent = ent.cget("text")
@@ -29,7 +29,7 @@ def click_2():
 
 btn2 = tk.Button(text="Click_2", command=click_2)
 btn2.pack()
-frame2.pack()
+frame2.grid()
 
 
 
