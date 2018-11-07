@@ -8,13 +8,17 @@ class App(tk.Frame):
 		self.master.title("countup")
 		self.create()
 
+		
+	def push(self):
+		print("push")
+	
+	
 	def create(self):
 		lb = tk.Label(text=0)
 		lb.pack()
 
-		btn = tk.Button(text="CountUp")
-		btn.pack()
-
-
+		btn = tk.Button(text="CountUp", command=self.push)
+		btn.pack()	
+		
 App = App()
 App.mainloop()
