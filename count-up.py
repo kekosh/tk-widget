@@ -41,10 +41,6 @@ def click_2():
 
 btn2 = tk.Button(frame2, text="Click_2", command=click_2)
 btn2.pack()
-<<<<<<< HEAD
-frame2.grid()
-=======
->>>>>>> a6ead76a0570c7e001116e2fe7228b18fa75a959
 
 import tkinter.scrolledtext as tkscr
 scrtxt = tkscr.ScrolledText(frame2)
