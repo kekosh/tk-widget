@@ -1,10 +1,27 @@
 import tkinter as tk
 from tkinter import messagebox
+import os
+
+""" create text file for save input data
+    if target file is nothing, make new text file.
+    if same name file is exists, add new line """
+def set_regist_data_file():
+    path = os.getcwd() + "/regdata.txt"
+    
+    #[test code]
+    with open(path,mode="r") as f:
+        if len(f.read()) < 1:
+            data = "Nothing"
+        else:
+            data = f.read()
+    
+        print(data)
+
 
 root = tk.Tk()
 root.title("count-up")
-root.geometry("300x200")
-
+#root.geometry("300x200")
+set_regist_data_file()
 # <- Frame1 ->
 frame1 = tk.Frame(root, width="3c", height="5c")
 frame1.propagate(False)
@@ -42,9 +59,10 @@ def click_2():
 btn2 = tk.Button(frame2, text="Click_2", command=click_2)
 btn2.pack()
 
-import tkinter.scrolledtext as tkscr
-scrtxt = tkscr.ScrolledText(frame2)
-scrtxt.pack()
+""" textbox with scrollber Widget  """
+# import tkinter.scrolledtext as tkscr
+# scrtxt = tkscr.ScrolledText(frame2)
+# scrtxt.pack()
 
 frame2.grid(row=0, column=1)
 
