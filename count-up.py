@@ -23,7 +23,7 @@ def set_regist_data_file():
             # data = "Nothing"
         # else:
             # data = f.read()
-    
+
         # print(data)
 
 """ load json-file data """
@@ -31,8 +31,16 @@ def load_jsonfile(path):
     try:
         with open(path, "r") as f:
             json_data = json.load(f)
-            print(json_data["default"])
+
+            """ if 'used' on setting is True, get settings region data.
+                else if 'used' is false,get defaut region data
+            """
             
+
+
+
+            print(json_data["default"])
+
             """ json.dumps will format the output data to json style """
             # dump = json.dumps(json_data, indent=4)
             # print(dump)
@@ -45,16 +53,14 @@ def save_jsonfile(path):
 
     count = lb.cget("text")
     entry = ent.cget("text")
-    
+
     i_odict["count"] = count
     i_odict["entry"] = entry
     o_odict["default"] = i_odict
-    
+
     #print(json.dumps(o_odict, indent=4))
-    
     with open(path, "w+") as f:
         json.dump(o_odict, f, indent=4)
-    
 #----------------------------------------------------
 
 root = tk.Tk()
@@ -77,7 +83,7 @@ btn.pack()
 frame1.grid(row=0, column=0)
 
 #<- Frame2 ->
-frame2 = tk.Frame(root, width="3c", height="5c")
+frame2 = tk.Frame(root, width="5c", height="5c", relief="ridge", borderwidth="2")
 frame2.propagate(False)
 ent = tk.Entry(frame2)
 ent.pack()
@@ -88,10 +94,10 @@ def click_2():
         # input_ent = "Blank!"
     # else:
         # input_ent = ent.get()
-    
+
     ''' if文の1行記述[変数 = Trueの場合の処理　if 条件式 else Flaseの場合の処理]    '''
     input_ent = ent.get() if ent.get() != "" else "BLANK!!"
-    
+
     messagebox.showinfo(title="information", message=input_ent)
 
 

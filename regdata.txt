@@ -1,6 +1,13 @@
 {
+    "settings":{
+        "used": True,
+        "count": 1,
+        "entry": "",
+        "lines": 2
+    }
     "default": {
         "count": 0,
-        "entry": ""
+        "entry": "",
+        "line": 1
     }
 }
