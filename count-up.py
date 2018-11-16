@@ -105,6 +105,7 @@ btn2.pack()
 
 frame2.grid(row=0, column=1)
 
+#methods
 path = set_regist_data_file()
 load_jsonfile(path)
 save_jsonfile(path)
