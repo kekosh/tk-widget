@@ -13,18 +13,9 @@ def set_regist_data_file():
     if os.name == "nt":
         path = os.getcwd() + "\\regdata.txt"
     else:
-        path = os.getcwd() + "/regdata.txt"   
-    
+        path = os.getcwd() + "/regdata.txt"
     return path
-    
-    #[test code]
-    # with open(path,mode="r") as f:
-        # if len(f.read()) < 1:
-            # data = "Nothing"
-        # else:
-            # data = f.read()
 
-        # print(data)
 
 """ load json-file data """
 def load_jsonfile(path):
@@ -35,7 +26,7 @@ def load_jsonfile(path):
             """ if 'used' on setting is True, get settings region data.
                 else if 'used' is false,get defaut region data
             """
-            
+
 
 
 
@@ -46,6 +37,7 @@ def load_jsonfile(path):
             # print(dump)
     except:
         print("Error")
+
 
 def save_jsonfile(path):
     o_odict = cl.OrderedDict()
@@ -61,11 +53,26 @@ def save_jsonfile(path):
     #print(json.dumps(o_odict, indent=4))
     with open(path, "w+") as f:
         json.dump(o_odict, f, indent=4)
+
+
+def click():
+    counter = int(lb.cget("text")) + 1
+    lb["text"]= counter
+
+
+def click_2():
+    '''　Entry-Widgetへの入力値はget()メソッドで取得する。
+        if文の1行記述[変数 = Trueの場合の処理　if 条件式 else Flaseの場合の処理] '''
+    input_ent = ent.get() if ent.get() != "" else "BLANK!!"
+
+    messagebox.showinfo(title="information", message=input_ent)
+
+
 #----------------------------------------------------
 
 root = tk.Tk()
 root.title("count-up")
-#root.geometry("300x200")
+root.geometry("400x300")
 
 # <- Frame1 ->
 frame1 = tk.Frame(root, width="3c", height="5c")
@@ -73,10 +80,6 @@ frame1.propagate(False)
 
 lb = tk.Label(frame1, text=0)
 lb.pack()
-
-def click():
-    counter = int(lb.cget("text")) + 1
-    lb["text"]= counter
 
 btn = tk.Button(frame1, text="Click", command=click)
 btn.pack()
@@ -88,19 +91,6 @@ frame2.propagate(False)
 ent = tk.Entry(frame2)
 ent.pack()
 
-def click_2():
-    '''　Entry-Widgetへの入力値はget()メソッドで取得する。　'''
-    # if ent.get() == "":
-        # input_ent = "Blank!"
-    # else:
-        # input_ent = ent.get()
-
-    ''' if文の1行記述[変数 = Trueの場合の処理　if 条件式 else Flaseの場合の処理]    '''
-    input_ent = ent.get() if ent.get() != "" else "BLANK!!"
-
-    messagebox.showinfo(title="information", message=input_ent)
-
-
 btn2 = tk.Button(frame2, text="Click_2", command=click_2)
 btn2.pack()
 
@@ -111,9 +101,18 @@ btn2.pack()
 
 frame2.grid(row=0, column=1)
 
+frame3 = tk.Frame(root, width="100", height="5c")
+frame3.propagate(False)
+btn3 = tk.Button(frame3, text="Quit", command=lambda:root.destroy())
+btn3.pack(side=tk.LEFT, padx=10)
+
+frame3.grid(row=0, column=3)
+
+
 #methods
 path = set_regist_data_file()
 load_jsonfile(path)
 save_jsonfile(path)
+
 
 root.mainloop()
