@@ -1,13 +1,16 @@
 {
-    "total":{
-        "count":1,
-        "default":0
+    "total": {
+        "count": 1,
+        "default": 0
     },
-
-    "data":{
-        "sample":{
-        "count":3,
-        "memo":"this data is sample."
+    "data": {
+        "sample1": {
+            "count": 3,
+            "memo": "this data is sample."
+        },
+        "sample2": {
+            "count": 1,
+            "memo": "sam sam sample!!"
         }
     }
 }
