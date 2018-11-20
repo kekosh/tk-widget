@@ -13,8 +13,10 @@ class Application(tk.Frame):
 
         with open(data_file,"r") as f:
             json_data = json.load(f)
-            
-        self.create_widgets(master,json_data)
+
+            #load Test
+            #print(json.dumps(json_data, indent = 4))
+            self.create_widgets(master, json_data)
 
 
     def get_filepath(self, os_name):
@@ -28,9 +30,10 @@ class Application(tk.Frame):
         # self.bk.pack()
         #sample-end
 
-        self.frame = tk.Frame(master, width="800", height="80", relief=tk.SOLID, borderwidth="1")
-        self.frame.propagate(False)
-        self.frame.grid(row=0)
+        for key in json_data:
+            self.frame = tk.Frame(master, width="780", height="80",relief=tk.SOLID, borderwidth="1")
+            self.frame.propagate(False)
+            self.frame.pack(pady = 10)
 
 
 
