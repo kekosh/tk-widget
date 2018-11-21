@@ -29,8 +29,9 @@ class Application(tk.Frame):
         # self.bk = tk.Button(text="Button")
         # self.bk.pack()
         #sample-end
-
-        for key in json_data:
+        odict = cl.OrderedDict()
+        odict = json_data["data"]
+        for key in odict:
             self.frame = tk.Frame(master, width="780", height="80",relief=tk.SOLID, borderwidth="1")
             self.frame.propagate(False)
             self.frame.pack(pady = 10)
