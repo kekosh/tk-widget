@@ -1,4 +1,6 @@
 {
     "python.linting.enabled": false,
-    "workbench.editor.enablePreview": false
+    "workbench.editor.enablePreview": false,
+    "editor.fontSize": 16,
+    "workbench.colorTheme": "Default Light+"
 }

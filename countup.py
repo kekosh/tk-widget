@@ -31,18 +31,14 @@ class Application(tk.Frame):
         #sample-end
         odict = cl.OrderedDict()
         odict = json_data["data"]
-        for key in odict:
+        for value in odict.values():
+            print(value)
             self.frame = tk.Frame(master, width="780", height="80",relief=tk.SOLID, borderwidth="1")
             self.frame.propagate(False)
             self.frame.pack(pady = 10)
 
-
-
-
-
-    def load_json(self):
-        data = load.json()
-
+            self.label = tk.Label(self.frame, text=str(value["count"]))
+            self.label.pack(side="left")
 #---------------------------------
 
 
