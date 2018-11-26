@@ -32,13 +32,12 @@ class Application(tk.Frame):
         odict = cl.OrderedDict()
         odict = json_data["data"]
         for value in odict.values():
-            print(value)
             self.frame = tk.Frame(master, width="780", height="80",relief=tk.SOLID, borderwidth="1")
             self.frame.propagate(False)
-            self.frame.pack(pady = 10)
+            self.frame.pack(pady=10, fill=tk.X)
 
             self.label = tk.Label(self.frame, text=str(value["count"]))
-            self.label.pack(side="left")
+            self.label.grid(row=0, column=0, padx = 10)
 #---------------------------------
 
 
