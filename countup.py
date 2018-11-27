@@ -25,19 +25,21 @@ class Application(tk.Frame):
 
 
     def create_widgets(self, master, json_data):
-        #sample-start
-        # self.bk = tk.Button(text="Button")
-        # self.bk.pack()
-        #sample-end
         odict = cl.OrderedDict()
         odict = json_data["data"]
         for value in odict.values():
-            self.frame = tk.Frame(master, width="780", height="80",relief=tk.SOLID, borderwidth="1")
+            self.frame = tk.Frame(master, width="780",relief=tk.SOLID, borderwidth="1")
             self.frame.propagate(False)
-            self.frame.pack(pady=10, fill=tk.X)
+            self.frame.pack(padx=5, pady=10, fill=tk.X)
 
             self.label = tk.Label(self.frame, text=str(value["count"]))
-            self.label.grid(row=0, column=0, padx = 10)
+            self.label.grid(row=0, column=0, padx=20)
+            self.entry = tk.Entry(self.frame, width=60, borderwidth="1", relief=tk.SOLID)
+            self.entry.grid(row=0, column=1, padx=10)
+            self.btn = tk.Button(self.frame, width=20, text="Up")
+            self.btn.grid(row=0, column=2)
+
+
 #---------------------------------
 
 
@@ -45,6 +47,6 @@ class Application(tk.Frame):
 root = tk.Tk()
 root.title("count up")
 root.geometry("800x400")
-root.resizable(0,1)
+root.resizable(1,1) #0:unresizable 1: resizable
 app = Application(master=root)
 app.mainloop()
