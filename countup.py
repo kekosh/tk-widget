@@ -28,7 +28,7 @@ class Application(tk.Frame):
         odict = cl.OrderedDict()
         odict = json_data["data"]
         for value in odict.values():
-            self.frame = tk.Frame(master, width="500",relief=tk.SOLID, borderwidth="1")
+            self.frame = tk.Frame(master, relief=tk.SOLID, borderwidth="1")
             self.frame.propagate(False)
             self.frame.pack(padx=5, pady=10, fill=tk.X)
 
@@ -37,20 +37,25 @@ class Application(tk.Frame):
             self.label = tk.Label(self.frame, text=str(value["count"]))
             self.label.grid(row=1, column=0, padx=20)
 
-
-            self.header_lbl_2 = tk.Label(self.frame, text="entry")
-            self.header_lbl_2.grid(row=0, column=1)
-            self.entry = tk.Entry(self.frame, width=40, borderwidth="1", relief=tk.SOLID)
-            self.entry.grid(row=1, column=1, padx=10)
-
-
             self.header_lbl_3 = tk.Label(self.frame, text="Up/Down")
-            self.header_lbl_3.grid(row=0, column=2, columnspan=2)
+            self.header_lbl_3.grid(row=0, column=1, columnspan=2)
             self.up_btn = tk.Button(self.frame, width=5, text="↑")
-            self.up_btn.grid(row=1, column=2)
+            self.up_btn.grid(row=1, column=1)
             self.down_btn = tk.Button(self.frame, width=5, text="↓")
-            self.down_btn.grid(row=1, column=3)
+            self.down_btn.grid(row=1, column=2)
 
+            self.header_lbl_2 = tk.Label(self.frame, text="memo")
+            self.header_lbl_2.grid(row=0, column=3)
+            self.entry = tk.Entry(self.frame, width=40, borderwidth="1", relief=tk.SOLID)
+            self.entry.grid(row=1, column=3, padx=10)
+
+        self.fix_frame = tk.Frame(master, relief=tk.SOLID, borderwidth="1")
+        #frame's ”propagation" property is inherited first frame definition
+        #self.fix_frame.propagate(False)
+        self.fix_frame.pack(padx=5, pady=10, fill=tk.X)
+
+        self.quit_btn = tk.Button(self.fix_frame, text="quit", command=lambda:master.destroy())
+        self.quit_btn.pack()
 #---------------------------------
 
 
