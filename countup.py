@@ -62,7 +62,7 @@ class Application(tk.Frame):
 #---------------------------------
 root = tk.Tk()
 root.title("count up")
-root.geometry("550x400")
+#root.geometry("550x400")
 root.resizable(1,1) #0:unresizable 1: resizable
 app = Application(master=root)
 app.mainloop()
