@@ -1,6 +1,0 @@
-{
-    "default": {
-        "count": 0,
-        "entry": ""
-    }
-}
