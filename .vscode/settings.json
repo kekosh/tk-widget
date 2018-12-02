@@ -1,6 +1,6 @@
 {
     "python.linting.enabled": false,
     "workbench.editor.enablePreview": false,
-    "editor.fontSize": 11,
-    "workbench.colorTheme": "Visual Studio Dark"
+    "workbench.colorTheme": "Visual Studio Light",
+    "editor.fontSize": 12
 }

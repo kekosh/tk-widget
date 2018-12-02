@@ -23,11 +23,21 @@ class Application(tk.Frame):
         dirkey = "\\" if os_name == "nt" else "/"
         return "{0}{1}data.json".format(os.getcwd(),dirkey)
 
+    def increment_countLbl(self, btn_num):
+        count_before = self.label.cget("text")
+        print("UP_" + str(btn_num))
+
+    def decrement_countLbl(self, btn_num):
+        count_before = self.label.cget("text")
+        print("DOWN_" + str(btn_num))
+
 
     def create_widgets(self, master, json_data):
         odict = cl.OrderedDict()
         odict = json_data["data"]
+        btn_origin_number = 0
         for value in odict.values():
+            btn_origin_number += 1
             self.frame = tk.Frame(master, relief=tk.SOLID, borderwidth="1")
             self.frame.propagate(False)
             self.frame.pack(padx=5, pady=10, fill=tk.X)
@@ -39,9 +49,9 @@ class Application(tk.Frame):
 
             self.header_lbl_3 = tk.Label(self.frame, text="Up/Down")
             self.header_lbl_3.grid(row=0, column=1, columnspan=2)
-            self.up_btn = tk.Button(self.frame, width=5, text="↑")
+            self.up_btn = tk.Button(self.frame, width=5, text="↑", command=lambda: self.increment_countLbl(btn_origin_number))
             self.up_btn.grid(row=1, column=1)
-            self.down_btn = tk.Button(self.frame, width=5, text="↓")
+            self.down_btn = tk.Button(self.frame, width=5, text="↓", command=lambda: self.decrement_countLbl(btn_origin_number))
             self.down_btn.grid(row=1, column=2)
 
             self.header_lbl_2 = tk.Label(self.frame, text="memo")
@@ -63,6 +73,6 @@ class Application(tk.Frame):
 root = tk.Tk()
 root.title("count up")
 #root.geometry("550x400")
-root.resizable(1,1) #0:unresizable 1: resizable
+root.resizable(0,1) #0:unresizable 1: resizable
 app = Application(master=root)
 app.mainloop()
