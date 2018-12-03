@@ -2,6 +2,8 @@ import os
 import tkinter as tk
 import json
 import collections as cl
+from tkinter import messagebox
+
 
 class Application(tk.Frame):
     def __init__(self, master=None):
@@ -11,42 +13,54 @@ class Application(tk.Frame):
     def get_jsonfile(self):
         "os.nameが「nt」の場合はwindows環境"
         separator = "\\" if os.name == "nt" else "/"
-        return "{0}{1}data.json".format(os.getcwd(),separator)
+        return "{0}{1}data.json".format(os.getcwd(), separator)
 
     def json_load(self):
         jsonfile = self.get_jsonfile()
 
-        with open(jsonfile,"r") as f:
+        with open(jsonfile, "r") as f:
             json_data = json.load(f)
 
         odict = cl.OrderedDict()
         odict = json_data["data"]
         return odict
 
+    def save_jsonfile(self):
+        jsonfile = self.get_jsonfile()
+
+    def get_selected(self, event):
+
+        ###選択している項目の名称（キー）を取得する
+        for i in self.data_listbox.curselection():
+            messagebox.showinfo(title="test", message=self.data_listbox.get(i))
+
+        ###キーを使用してjsonファイルを読み込み、該当データを抜き出し
+
+        ###抜き出したデータを項目別に変数に格納
+
     def create_widgets(self, master):
         self.OuterFrame = tk.Frame(master, relief=tk.SOLID, borderwidth="1")
         self.OuterFrame.pack(padx=5, pady=10, fill=tk.X)
 
+        ####-----------------------------------------------------------------------------------
         self.list_Frame = tk.Frame(
             self.OuterFrame, relief=tk.SOLID, borderwidth="1")
         self.list_Frame.pack(padx=5, pady=10, fill=tk.X)
 
         """
-        リストに表示するデータは配列をStringVarサブクラス型の変数に変換する必要がある。
+        ListBox-Widgetに表示するデータは配列をStringVarサブクラス型の変数に変換する必要がある。
         """
-        # list_val = tk.StringVar(value=["BTC", "BCH", "XRP", "NEM", "ETH",
-        #                                "MONERO", "BNK", "LSK", "ALIS", "MONA", "GAKT", "YEN", "$"])
-
         #jsonファイルを読み込んで第一改装のキー情報をリスト型変数にいったん格納する。
         json_data = self.json_load()
-        value_list = []
-        for i in json_data.keys():
-            value_list.append(i)
+        #リスト内包表記：式 for 任意変数 in イテラブルオブジェクト
+        value_list = [i for i in json_data.keys()]
 
         list_value = tk.StringVar(value=value_list)
 
         self.data_listbox = tk.Listbox(
             self.list_Frame, listvariable=list_value, width="76")
+
+        self.data_listbox.bind("<<ListboxSelect>>", self.get_selected)
         self.data_listbox.pack(side=tk.LEFT, fill=tk.X)
 
         """
@@ -63,13 +77,35 @@ class Application(tk.Frame):
         self.data_listbox.configure(xscrollcommand=sb_x.set)
         sb_y.pack(side=tk.LEFT, fill=tk.Y)
 
+        ####-----------------------------------------------------------------------------------
         self.input_frame = tk.Frame(
             self.OuterFrame, relief=tk.SOLID, borderwidth="1")
-        self.input_frame.pack(padx=5, pady=10, fill=tk.X)
+        self.input_frame.pack(padx=5, pady=10, ipady=5, fill=tk.X)
 
+        """
+        gridでwidgetを配置した場合、widget.columnconfigure(index, weight=[0:伸縮なし 1:伸縮あり]、rowconfigureで
+        行、列の伸縮比率を指定する必要がある。
+        """
+        self.columnconfigure(0, weight=1)
+        self.columnconfigure(1, weight=1)
+        self.columnconfigure(2, weight=1)
+
+
+        self.lbl_1 = tk.Label(self.input_frame, text="count")
+        self.lbl_1.grid(row=0, column=0)
         self.count_entry = tk.Entry(
-            self.input_frame, width=30, borderwidth="1", relief=tk.SOLID)
-        self.count_entry.grid(row=1, column=0)
+            self.input_frame, width=10, borderwidth="1", relief=tk.SOLID)
+        self.count_entry.grid(row=1, column=0, padx=5)
+
+        self.lbl_2 = tk.Label(self.input_frame, text="name")
+        self.lbl_2.grid(row=0, column=1)
+        self.task_name_entry = tk.Entry(self.input_frame, width=25, borderwidth="1", relief=tk.SOLID)
+        self.task_name_entry.grid(row=1, column=1, padx=5)
+
+        self.lbl_3 = tk.Label(self.input_frame, text="description")
+        self.lbl_3.grid(row=0, column=2))
+
+
 
 
 
