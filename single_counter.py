@@ -29,17 +29,24 @@ class Application(tk.Frame):
         jsonfile = self.get_jsonfile()
 
     def get_selected(self, event):
-
-        ###選択している項目の名称（キー）を取得する
-        for i in self.data_listbox.curselection():
-            messagebox.showinfo(title="test", message=self.data_listbox.get(i))
+        select_IDX = self.data_listbox.curselection()
+        select_data_key = self.data_listbox.get(select_IDX)
 
         ###キーを使用してjsonファイルを読み込み、該当データを抜き出し
         jsonfile = self.get_jsonfile()
 
         with open(jsonfile, "r") as f:
-            json_data = json.load(f,object_pairs_hook=cl.OrderedDict)
+            json_data = json.load(f, object_pairs_hook=cl.OrderedDict)
+
+        ###反映前に既存データを削除
+        self.count_entry.delete(0, tk.END)
+        self.task_name_entry.delete(0, tk.END)
+        self.description_entry.delete(0, tk.END)
+
         ###抜き出したデータを項目別に変数に格納
+        self.count_entry.insert(tk.END, json_data["data"][select_data_key]["count"])
+        self.task_name_entry.insert(tk.END, select_data_key)
+        self.description_entry.insert(tk.END, json_data["data"][select_data_key]["memo"])
 
     def create_widgets(self, master):
         self.OuterFrame = tk.Frame(master, relief=tk.SOLID, borderwidth="1")
@@ -96,22 +103,21 @@ class Application(tk.Frame):
 
         self.lbl_1 = tk.Label(self.input_frame, text="count")
         self.lbl_1.grid(row=0, column=0)
-        self.count_entry = tk.Entry(self.input_frame, width=10, borderwidth="1", relief=tk.SOLID)
+        self.count_entry = tk.Entry(
+            self.input_frame, width=10, borderwidth="1", relief=tk.SOLID)
         self.count_entry.grid(row=1, column=0, padx=5)
 
         self.lbl_2 = tk.Label(self.input_frame, text="name")
         self.lbl_2.grid(row=0, column=1)
-        self.task_name_entry = tk.Entry(self.input_frame, width=25, borderwidth="1", relief=tk.SOLID)
+        self.task_name_entry = tk.Entry(
+            self.input_frame, width=25, borderwidth="1", relief=tk.SOLID)
         self.task_name_entry.grid(row=1, column=1, padx=5)
 
         self.lbl_3 = tk.Label(self.input_frame, text="description")
         self.lbl_3.grid(row=0, column=2)
-        self.description_entry = tk.Entry(self.input_frame, width=35, borderwidth="1", relief=tk.SOLID)
+        self.description_entry = tk.Entry(
+            self.input_frame, width=35, borderwidth="1", relief=tk.SOLID)
         self.description_entry.grid(row=1, column=2, padx=5)
-
-
-
-
 
 
 root = tk.Tk()
