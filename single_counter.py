@@ -103,8 +103,9 @@ class Application(tk.Frame):
         self.task_name_entry.grid(row=1, column=1, padx=5)
 
         self.lbl_3 = tk.Label(self.input_frame, text="description")
-        self.lbl_3.grid(row=0, column=2))
-
+        self.lbl_3.grid(row=0, column=2)
+        self.description_entry = tk.Entry(self.input_frame, borderwidth="1", relief=tk.SOLID)
+        self.description_entry.grid(row=1, column=2, columnspan=5, padx=5)
 
 
 

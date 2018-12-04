@@ -1,5 +1,4 @@
 {
     "python.linting.enabled": false,
-    "workbench.editor.enablePreview": false,
-    "editor.fontSize": 15
+    "workbench.editor.enablePreview": false
 }
