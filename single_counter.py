@@ -19,7 +19,7 @@ class Application(tk.Frame):
         jsonfile = self.get_jsonfile()
 
         with open(jsonfile, "r") as f:
-            json_data = json.load(f)
+            json_data = json.load(f, object_pairs_hook=cl.OrderedDict)
 
         odict = cl.OrderedDict()
         odict = json_data["data"]
@@ -35,7 +35,10 @@ class Application(tk.Frame):
             messagebox.showinfo(title="test", message=self.data_listbox.get(i))
 
         ###キーを使用してjsonファイルを読み込み、該当データを抜き出し
+        jsonfile = self.get_jsonfile()
 
+        with open(jsonfile, "r") as f:
+            json_data = json.load(f,object_pairs_hook=cl.OrderedDict)
         ###抜き出したデータを項目別に変数に格納
 
     def create_widgets(self, master):
@@ -59,8 +62,8 @@ class Application(tk.Frame):
 
         self.data_listbox = tk.Listbox(
             self.list_Frame, listvariable=list_value, width="76")
-
-        self.data_listbox.bind("<<ListboxSelect>>", self.get_selected)
+        self.data_listbox.bind("<Double-1>", self.get_selected)
+        #self.data_listbox.bind("<Double-1>", self.get_selected)
         self.data_listbox.pack(side=tk.LEFT, fill=tk.X)
 
         """
@@ -89,12 +92,11 @@ class Application(tk.Frame):
         self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=1)
         self.columnconfigure(2, weight=1)
-
+        self.columnconfigure(3, weight=1)
 
         self.lbl_1 = tk.Label(self.input_frame, text="count")
         self.lbl_1.grid(row=0, column=0)
-        self.count_entry = tk.Entry(
-            self.input_frame, width=10, borderwidth="1", relief=tk.SOLID)
+        self.count_entry = tk.Entry(self.input_frame, width=10, borderwidth="1", relief=tk.SOLID)
         self.count_entry.grid(row=1, column=0, padx=5)
 
         self.lbl_2 = tk.Label(self.input_frame, text="name")
@@ -104,8 +106,8 @@ class Application(tk.Frame):
 
         self.lbl_3 = tk.Label(self.input_frame, text="description")
         self.lbl_3.grid(row=0, column=2)
-        self.description_entry = tk.Entry(self.input_frame, borderwidth="1", relief=tk.SOLID)
-        self.description_entry.grid(row=1, column=2, columnspan=5, padx=5)
+        self.description_entry = tk.Entry(self.input_frame, width=35, borderwidth="1", relief=tk.SOLID)
+        self.description_entry.grid(row=1, column=2, padx=5)
 
 
 
