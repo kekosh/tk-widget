@@ -123,6 +123,6 @@ class Application(tk.Frame):
 root = tk.Tk()
 root.title("single_counter")
 root.geometry("500x500")
-root.resizable(1, 1)
+root.resizable(0, 0)
 app = Application(master=root)
 app.mainloop()
