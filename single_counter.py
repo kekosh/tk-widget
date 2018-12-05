@@ -39,14 +39,25 @@ class Application(tk.Frame):
             json_data = json.load(f, object_pairs_hook=cl.OrderedDict)
 
         ###反映前に既存データを削除
-        self.count_entry.delete(0, tk.END)
-        self.task_name_entry.delete(0, tk.END)
-        self.description_entry.delete(0, tk.END)
+        self.clear_entry()
 
         ###抜き出したデータを項目別に変数に格納
         self.count_entry.insert(tk.END, json_data["data"][select_data_key]["count"])
         self.task_name_entry.insert(tk.END, select_data_key)
         self.description_entry.insert(tk.END, json_data["data"][select_data_key]["memo"])
+
+    def clear_entry(self):
+        self.count_entry.delete(0, tk.END)
+        self.task_name_entry.delete(0, tk.END)
+        self.description_entry.delete(0, tk.END)
+
+    def increment(self):
+        input = self.count_entry.get()
+        count = int(input) + 1 if input.isdigit() else 1
+
+        self.count_entry.delete(0, tk.END)
+        self.count_entry.insert(tk.END, count)
+
 
     def create_widgets(self, master):
         self.OuterFrame = tk.Frame(master, relief=tk.SOLID, borderwidth="1")
@@ -119,6 +130,17 @@ class Application(tk.Frame):
             self.input_frame, width=35, borderwidth="1", relief=tk.SOLID)
         self.description_entry.grid(row=1, column=2, padx=5)
 
+        self.func_btn_frame = tk.Frame(self.input_frame)
+        self.func_btn_frame.grid(row=3, column=2, pady=10)
+
+        self.btn_up = tk.Button(self.func_btn_frame, text="Up", width=8, command=self.increment)
+        self.btn_up.grid(row=0, column=0, padx=5, pady=5)
+        self.btn_down = tk.Button(self.func_btn_frame, text="Down", width=8)
+        self.btn_down.grid(row=0, column=1, padx=5, pady=5)
+        self.btn_clear = tk.Button(self.func_btn_frame, text="Clear", width=8, bg="lightgray", command=self.clear_entry)
+        self.btn_clear.grid(row=0, column=2, padx=5, pady=5)
+        self.btn_save = tk.Button(self.func_btn_frame, text="Save", width=8)
+        self.btn_save.grid(row=1, column=2)
 
 root = tk.Tk()
 root.title("single_counter")
