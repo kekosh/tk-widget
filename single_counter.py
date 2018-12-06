@@ -26,7 +26,27 @@ class Application(tk.Frame):
         return odict
 
     def save_jsonfile(self):
+        ###入力済データ取得
+        count = self.count_entry.get()
+        task_name = self.task_name_entry.get()
+        description = self.description_entry.get()
+
+        ###データ登録用オブジェクト作成
+        odict_data = cl.OrderedDict()
+        odict_data = {"count":int(count), "memo":description}
+
+        odict_shell = cl.OrderedDict()
+        odict_shell["data"] = odict_data
+
+        ###データ登録のために現時点のJsonファイルを読み込む
         jsonfile = self.get_jsonfile()
+        load_data = None
+        with open(jsonfile, "r") as f:
+            load_data = json.load(f)
+
+        load_data["data"][task_name] = odict_data
+        with open(jsonfile, "w") as f:
+            json.dump(load_data, f, indent=4)
 
     def get_selected(self, event):
         select_IDX = self.data_listbox.curselection()
@@ -51,13 +71,20 @@ class Application(tk.Frame):
         self.task_name_entry.delete(0, tk.END)
         self.description_entry.delete(0, tk.END)
 
-    def increment(self):
+    def update_count(self, key):
         input = self.count_entry.get()
-        count = int(input) + 1 if input.isdigit() else 1
+
+        if input.isdigit():
+            if key == 1:
+                count = int(input) + 1
+            else:
+                count = int(input) - 1
+                count = 0 if count < 0 else count
+        else:
+            count = ""
 
         self.count_entry.delete(0, tk.END)
         self.count_entry.insert(tk.END, count)
-
 
     def create_widgets(self, master):
         self.OuterFrame = tk.Frame(master, relief=tk.SOLID, borderwidth="1")
@@ -133,13 +160,17 @@ class Application(tk.Frame):
         self.func_btn_frame = tk.Frame(self.input_frame)
         self.func_btn_frame.grid(row=3, column=2, pady=10)
 
-        self.btn_up = tk.Button(self.func_btn_frame, text="Up", width=8, command=self.increment)
+        self.btn_up = tk.Button(self.func_btn_frame, text="Up",
+                                     width=8, command=lambda: self.update_count(1))
         self.btn_up.grid(row=0, column=0, padx=5, pady=5)
-        self.btn_down = tk.Button(self.func_btn_frame, text="Down", width=8)
+        self.btn_down = tk.Button(self.func_btn_frame, text="Down",
+                                     width=8, command=lambda: self.update_count(2))
         self.btn_down.grid(row=0, column=1, padx=5, pady=5)
-        self.btn_clear = tk.Button(self.func_btn_frame, text="Clear", width=8, bg="lightgray", command=self.clear_entry)
+        self.btn_clear = tk.Button(self.func_btn_frame, text="Clear",
+                                     width=8, bg="lightgray", command=self.clear_entry)
         self.btn_clear.grid(row=0, column=2, padx=5, pady=5)
-        self.btn_save = tk.Button(self.func_btn_frame, text="Save", width=8)
+        self.btn_save = tk.Button(self.func_btn_frame, text="Save",
+                                     width=8, command=self.save_jsonfile)
         self.btn_save.grid(row=1, column=2)
 
 root = tk.Tk()

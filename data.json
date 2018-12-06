@@ -1,8 +1,4 @@
 {
-    "total": {
-        "count": 1,
-        "default": 0
-    },
     "data": {
         "sample1": {
             "count": 3,
@@ -14,6 +10,14 @@
         },
         "sample3": {
             "count": 1,
+            "memo": "sam sam sample!!"
+        },
+        "sample4": {
+            "count": 4,
+            "memo": "sam sam sample!!"
+        },
+        "sample5": {
+            "count": 5,
             "memo": "sam sam sample!!"
         }
     }
