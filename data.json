@@ -19,6 +19,18 @@
         "sample5": {
             "count": 5,
             "memo": "sam sam sample!!"
+        },
+        "test": {
+            "count": 99,
+            "memo": "good!!"
+        },
+        "update on screen": {
+            "count": 15,
+            "memo": "up up update!!"
+        },
+        "sample6": {
+            "count": -1,
+            "memo": "sample6"
         }
     }
 }

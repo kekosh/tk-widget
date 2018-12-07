@@ -48,6 +48,8 @@ class Application(tk.Frame):
         with open(jsonfile, "w") as f:
             json.dump(load_data, f, indent=4)
 
+        self.data_listbox.insert(tk.END, task_name)
+
     def get_selected(self, event):
         select_IDX = self.data_listbox.curselection()
         select_data_key = self.data_listbox.get(select_IDX)
