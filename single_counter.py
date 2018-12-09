@@ -44,6 +44,10 @@ class Application(tk.Frame):
         with open(jsonfile, "r") as f:
             load_data = json.load(f)
 
+        ###新規データの場合はリストボックスにkeyを追加する
+        if task_name not in load_data["data"]:
+            self.data_listbox.insert(tk.END, task_name)
+
         load_data["data"][task_name] = odict_data
         with open(jsonfile, "w") as f:
             json.dump(load_data, f, indent=4)
@@ -65,6 +69,10 @@ class Application(tk.Frame):
         self.count_entry.insert(tk.END, json_data["data"][select_data_key]["count"])
         self.task_name_entry.insert(tk.END, select_data_key)
         self.description_entry.insert(tk.END, json_data["data"][select_data_key]["memo"])
+
+    #[Note]選択データ削除処理実装中
+    def delete_record(self):
+        None
 
     def clear_entry(self):
         self.count_entry.delete(0, tk.END)
@@ -130,15 +138,6 @@ class Application(tk.Frame):
             self.OuterFrame, relief=tk.SOLID, borderwidth="1")
         self.input_frame.pack(padx=5, pady=10, ipady=5, fill=tk.X)
 
-        """
-        gridでwidgetを配置した場合、widget.columnconfigure(index, weight=[0:伸縮なし 1:伸縮あり]、rowconfigureで
-        行、列の伸縮比率を指定する必要がある。
-        """
-        self.columnconfigure(0, weight=1)
-        self.columnconfigure(1, weight=1)
-        self.columnconfigure(2, weight=1)
-        self.columnconfigure(3, weight=1)
-
         self.lbl_1 = tk.Label(self.input_frame, text="count")
         self.lbl_1.grid(row=0, column=0)
         self.count_entry = tk.Entry(
@@ -171,7 +170,8 @@ class Application(tk.Frame):
         self.btn_clear.grid(row=0, column=2, padx=5, pady=5)
         self.btn_save = tk.Button(self.func_btn_frame, text="Save",
                                      width=8, command=self.save_jsonfile)
-        self.btn_save.grid(row=1, column=2)
+        self.btn_save.grid(row=1, column=1)
+        self.btn_delete = tk.Button(self.func_btn_frame, text="Delete", width=8, command=self.delete_record)
 
 root = tk.Tk()
 root.title("single_counter")
