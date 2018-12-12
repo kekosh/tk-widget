@@ -33,7 +33,7 @@ class Application(tk.Frame):
 
         ###データ登録用オブジェクト作成
         odict_data = cl.OrderedDict()
-        odict_data = {"count":int(count), "memo":description}
+        odict_data = {"count": int(count), "memo": description}
 
         odict_shell = cl.OrderedDict()
         odict_shell["data"] = odict_data
@@ -70,9 +70,11 @@ class Application(tk.Frame):
         self.clear_entry()
 
         ###抜き出したデータを項目別に変数に格納
-        self.count_entry.insert(tk.END, json_data["data"][select_data_key]["count"])
+        self.count_entry.insert(
+            tk.END, json_data["data"][select_data_key]["count"])
         self.task_name_entry.insert(tk.END, select_data_key)
-        self.description_entry.insert(tk.END, json_data["data"][select_data_key]["memo"])
+        self.description_entry.insert(
+            tk.END, json_data["data"][select_data_key]["memo"])
 
     def delete_record(self):
         index, key = self.get_oncursor()
@@ -106,6 +108,9 @@ class Application(tk.Frame):
 
         self.count_entry.delete(0, tk.END)
         self.count_entry.insert(tk.END, count)
+
+    def quit_app(self):
+        root.destroy()
 
     def create_widgets(self, master):
         self.OuterFrame = tk.Frame(master, relief=tk.SOLID, borderwidth="1")
@@ -173,26 +178,28 @@ class Application(tk.Frame):
         self.func_btn_frame.grid(row=3, column=2, pady=10)
 
         self.btn_up = tk.Button(self.func_btn_frame, text="Up",
-                                     width=8, command=lambda: self.update_count(1))
+                                width=8, command=lambda: self.update_count(1))
         self.btn_up.grid(row=0, column=0, padx=5, pady=5)
         self.btn_down = tk.Button(self.func_btn_frame, text="Down",
-                                     width=8, command=lambda: self.update_count(2))
+                                  width=8, command=lambda: self.update_count(2))
         self.btn_down.grid(row=0, column=1, padx=5, pady=5)
         self.btn_clear = tk.Button(self.func_btn_frame, text="Clear",
-                                     width=8, bg="lightgray", command=self.clear_entry)
+                                   width=8, bg="lightgray", command=self.clear_entry)
         self.btn_clear.grid(row=0, column=2, padx=5, pady=5)
         self.btn_save = tk.Button(self.func_btn_frame, text="Save",
-                                     width=8, command=self.save_jsonfile)
+                                  width=8, command=self.save_jsonfile)
         self.btn_save.grid(row=1, column=0)
-        self.btn_delete = tk.Button(self.func_btn_frame, text="Delete", width=8,command=lambda:self.delete_record())
-        self.btn_delete.grid(row=1,column=1)
-        self.btn_quit = tk.Button(self.func_btn_frame, text="Quit", width=8, command=quit)
+        self.btn_delete = tk.Button(
+            self.func_btn_frame, text="Delete", width=8, command=lambda: self.delete_record())
+        self.btn_delete.grid(row=1, column=1)
+        self.btn_quit = tk.Button(
+            self.func_btn_frame, text="Quit", width=8, command=self.quit_app)
         self.btn_quit.grid(row=1, column=2)
 
 
 root = tk.Tk()
 root.title("single_counter")
-root.geometry("500x320")
+#root.geometry("500x400")
 root.resizable(0, 0)
 app = Application(master=root)
 app.mainloop()
