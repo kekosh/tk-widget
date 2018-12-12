@@ -88,24 +88,8 @@
             "count": 6,
             "memo": "sam sam sample!!\""
         },
-        "samp140": {
-            "count": 15,
-            "memo": "sam sam sample!!"
-        },
-        "samp200": {
-            "count": 15,
-            "memo": "sam sam sample!!"
-        },
         "sample180": {
             "count": 6,
-            "memo": "sam sam sample!!\""
-        },
-        "sample190": {
-            "count": 6,
-            "memo": "sam sam sample!!\""
-        },
-        "sample200": {
-            "count": 200,
             "memo": "sam sam sample!!\""
         }
     }

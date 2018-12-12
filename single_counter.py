@@ -52,9 +52,13 @@ class Application(tk.Frame):
         with open(jsonfile, "w") as f:
             json.dump(load_data, f, indent=4)
 
+    def get_oncursor(self):
+        index = self.data_listbox.curselection()
+        select_data_key = self.data_listbox.get(index)
+        return index, select_data_key
+
     def get_selected(self, event):
-        select_IDX = self.data_listbox.curselection()
-        select_data_key = self.data_listbox.get(select_IDX)
+        select_IDX, select_data_key = self.get_oncursor()
 
         ###キーを使用してjsonファイルを読み込み、該当データを抜き出し
         jsonfile = self.get_jsonfile()
@@ -70,9 +74,18 @@ class Application(tk.Frame):
         self.task_name_entry.insert(tk.END, select_data_key)
         self.description_entry.insert(tk.END, json_data["data"][select_data_key]["memo"])
 
-    #[Note]選択データ削除処理実装中
     def delete_record(self):
-        None
+        index, key = self.get_oncursor()
+        jsonfile = self.get_jsonfile()
+
+        with open(jsonfile, "r") as f:
+            json_data = json.load(f, object_pairs_hook=cl.OrderedDict)
+            del json_data["data"][key]
+
+        self.data_listbox.delete(index, index)
+
+        with open(jsonfile, "w") as f:
+            json.dump(json_data, f, indent=4)
 
     def clear_entry(self):
         self.count_entry.delete(0, tk.END)
@@ -170,12 +183,16 @@ class Application(tk.Frame):
         self.btn_clear.grid(row=0, column=2, padx=5, pady=5)
         self.btn_save = tk.Button(self.func_btn_frame, text="Save",
                                      width=8, command=self.save_jsonfile)
-        self.btn_save.grid(row=1, column=1)
-        self.btn_delete = tk.Button(self.func_btn_frame, text="Delete", width=8, command=self.delete_record)
+        self.btn_save.grid(row=1, column=0)
+        self.btn_delete = tk.Button(self.func_btn_frame, text="Delete", width=8,command=lambda:self.delete_record())
+        self.btn_delete.grid(row=1,column=1)
+        self.btn_quit = tk.Button(self.func_btn_frame, text="Quit", width=8, command=quit)
+        self.btn_quit.grid(row=1, column=2)
+
 
 root = tk.Tk()
 root.title("single_counter")
-root.geometry("500x500")
+root.geometry("500x320")
 root.resizable(0, 0)
 app = Application(master=root)
 app.mainloop()

@@ -1,6 +1,0 @@
-{
-    "python.linting.enabled": false,
-    "workbench.editor.enablePreview": false,
-    "terminal.integrated.fontSize": 13,
-    "editor.fontSize": 12
-}
