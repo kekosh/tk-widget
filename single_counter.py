@@ -58,8 +58,6 @@ class Application(tk.Frame):
         return index, select_data_key
 
     def get_selected(self, event):
-        select_IDX, select_data_key = self.get_oncursor()
-
         ###キーを使用してjsonファイルを読み込み、該当データを抜き出し
         jsonfile = self.get_jsonfile()
 
