@@ -76,8 +76,8 @@
             "count": 5,
             "memo": "sam sam sample!!"
         },
-        "test": {
-            "count": -2,
+        "sample200": {
+            "count": 200,
             "memo": ""
         }
     }

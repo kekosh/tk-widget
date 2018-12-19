@@ -81,12 +81,20 @@ class Application(tk.Frame):
             json.dump(load_data, f, indent=4)
 
     def get_oncursor(self):
-        index = self.data_listbox.curselection()
-        select_data_key = self.data_listbox.get(index)
-        return index, select_data_key
+        index = select_data_key = errmsg = ""
+        try:
+            index = self.data_listbox.curselection()
+            select_data_key = self.data_listbox.get(index)
+        except:
+            errmsg = str(sys.exc_info()[1])
+        return index, select_data_key, errmsg
 
     def get_selected(self, event):
-        index, select_data_key = self.get_oncursor()
+        index, select_data_key, errmsg = self.get_oncursor()
+
+        if len(errmsg) > 0 :
+            messagebox.showerror(title="Error!!", message=errmsg)
+            return
 
         ###キーを使用してjsonファイルを読み込み、該当データを抜き出し
         jsonfile = self.get_jsonfile()
@@ -105,7 +113,12 @@ class Application(tk.Frame):
             tk.END, json_data["data"][select_data_key]["memo"])
 
     def delete_record(self):
-        index, key = self.get_oncursor()
+        index, key, errmsg = self.get_oncursor()
+
+        if len(errmsg) > 0:
+            messagebox.showerror(title="Error!!", message=errmsg)
+            return
+
         jsonfile = self.get_jsonfile()
 
         with open(jsonfile, "r") as f:
