@@ -26,7 +26,7 @@ class Application(tk.Frame):
         odict = json_data["data"]
         return odict
 
-    def check_and_cast_inputs(self,_count,_task_name):
+    def check_and_cast_inputs(self, _count, _task_name):
         __count = 0
         __task_name = ""
         __err = ""
@@ -40,7 +40,7 @@ class Application(tk.Frame):
         if len(_task_name.strip()) > 0:
             __task_name = _task_name
         else:
-            if len(__err) > 0 :
+            if len(__err) > 0:
                 __err = __err + "\r\n"
 
             __err += "task_name is empty."
@@ -54,8 +54,8 @@ class Application(tk.Frame):
         description = self.description_entry.get()
 
         ### キャストと入力チェック
-        count, err = self.check_and_cast_inputs(count,task_name)
-        if len(err) > 0 :
+        count, err = self.check_and_cast_inputs(count, task_name)
+        if len(err) > 0:
             messagebox.showerror(title="Warning!!", message=err)
             return
 
@@ -80,6 +80,8 @@ class Application(tk.Frame):
         with open(jsonfile, "w") as f:
             json.dump(load_data, f, indent=4)
 
+        messagebox.showinfo(title="Infomation", message="complete!!")
+
     def get_oncursor(self):
         index = select_data_key = errmsg = ""
         try:
@@ -92,7 +94,7 @@ class Application(tk.Frame):
     def get_selected(self, event):
         index, select_data_key, errmsg = self.get_oncursor()
 
-        if len(errmsg) > 0 :
+        if len(errmsg) > 0:
             messagebox.showerror(title="Error!!", message=errmsg)
             return
 
