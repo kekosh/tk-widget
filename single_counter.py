@@ -1,4 +1,5 @@
 import os
+import sys
 import tkinter as tk
 import json
 import collections as cl
@@ -25,11 +26,38 @@ class Application(tk.Frame):
         odict = json_data["data"]
         return odict
 
+    def check_and_cast_inputs(self,_count,_task_name):
+        __count = 0
+        __task_name = ""
+        __err = ""
+
+        if len(_count.strip()) > 0:
+            try:
+                __count = int(_count)
+            except:
+                __err = str(sys.exc_info()[1])
+
+        if len(_task_name.strip()) > 0:
+            __task_name = _task_name
+        else:
+            if len(__err) > 0 :
+                __err = __err + "\r\n"
+
+            __err += "task_name is empty."
+
+        return __count, __err
+
     def save_jsonfile(self):
         ###入力済データ取得
         count = self.count_entry.get()
         task_name = self.task_name_entry.get()
         description = self.description_entry.get()
+
+        ### キャストと入力チェック
+        count, err = self.check_and_cast_inputs(count,task_name)
+        if len(err) > 0 :
+            messagebox.showerror(title="Warning!!", message=err)
+            return
 
         ###データ登録用オブジェクト作成
         odict_data = cl.OrderedDict()
@@ -58,6 +86,8 @@ class Application(tk.Frame):
         return index, select_data_key
 
     def get_selected(self, event):
+        index, select_data_key = self.get_oncursor()
+
         ###キーを使用してjsonファイルを読み込み、該当データを抜き出し
         jsonfile = self.get_jsonfile()
 
@@ -93,6 +123,9 @@ class Application(tk.Frame):
         self.description_entry.delete(0, tk.END)
 
     def update_count(self, key):
+        """
+        key -- 1:UP 2:Down
+        """
         input = self.count_entry.get()
 
         if input.isdigit():
