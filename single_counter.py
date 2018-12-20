@@ -14,10 +14,20 @@ class Application(tk.Frame):
     def get_jsonfile(self):
         "os.nameが「nt」の場合はwindows環境"
         separator = "\\" if os.name == "nt" else "/"
-        return "{0}{1}data.json".format(os.getcwd(), separator)
+        json_path = "{0}{1}data.json".format(os.getcwd(), separator)
+
+        isexist = os.path.exists(json_path)
+        if isexist:
+            pass
+        else:
+            sampledata = {"data":{"sampleXXX":{"count":3,"memo":"No data Sample."}}}
+            with open(json_path, "w+") as f:
+                json.dump(sampledata, f, indent=4)
+
+        return isexist, json_path
 
     def json_load(self):
-        jsonfile = self.get_jsonfile()
+        isexist, jsonfile = self.get_jsonfile()
 
         with open(jsonfile, "r") as f:
             json_data = json.load(f, object_pairs_hook=cl.OrderedDict)
@@ -67,7 +77,7 @@ class Application(tk.Frame):
         odict_shell["data"] = odict_data
 
         ###データ登録のために現時点のJsonファイルを読み込む
-        jsonfile = self.get_jsonfile()
+        isexist, jsonfile = self.get_jsonfile()
         load_data = None
         with open(jsonfile, "r") as f:
             load_data = json.load(f)
@@ -99,7 +109,7 @@ class Application(tk.Frame):
             return
 
         ###キーを使用してjsonファイルを読み込み、該当データを抜き出し
-        jsonfile = self.get_jsonfile()
+        isexist, jsonfile = self.get_jsonfile()
 
         with open(jsonfile, "r") as f:
             json_data = json.load(f, object_pairs_hook=cl.OrderedDict)
@@ -121,7 +131,7 @@ class Application(tk.Frame):
             messagebox.showerror(title="Error!!", message=errmsg)
             return
 
-        jsonfile = self.get_jsonfile()
+        isexist, jsonfile = self.get_jsonfile()
 
         with open(jsonfile, "r") as f:
             json_data = json.load(f, object_pairs_hook=cl.OrderedDict)
