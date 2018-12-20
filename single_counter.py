@@ -169,12 +169,12 @@ class Application(tk.Frame):
         root.destroy()
 
     def create_widgets(self, master):
-        self.OuterFrame = tk.Frame(master, relief=tk.SOLID, borderwidth="1")
+        self.OuterFrame = tk.Frame(master, relief=tk.SOLID, borderwidth=1)
         self.OuterFrame.pack(padx=5, pady=10, fill=tk.X)
 
         ####-----------------------------------------------------------------------------------
         self.list_Frame = tk.Frame(
-            self.OuterFrame, relief=tk.SOLID, borderwidth="1")
+            self.OuterFrame, relief=tk.SOLID, borderwidth=1)
         self.list_Frame.pack(padx=5, pady=10, fill=tk.X)
 
         """
@@ -208,28 +208,50 @@ class Application(tk.Frame):
         sb_y.pack(side=tk.LEFT, fill=tk.Y)
 
         ####-----------------------------------------------------------------------------------
+        ###[input data]
         self.input_frame = tk.Frame(
-            self.OuterFrame, relief=tk.SOLID, borderwidth="1")
+            self.OuterFrame, relief=tk.SOLID, borderwidth=1)
         self.input_frame.pack(padx=5, pady=10, ipady=5, fill=tk.X)
 
         self.lbl_1 = tk.Label(self.input_frame, text="count")
         self.lbl_1.grid(row=0, column=0)
         self.count_entry = tk.Entry(
-            self.input_frame, width=10, borderwidth="1", relief=tk.SOLID)
+            self.input_frame, width=10, borderwidth=1, relief=tk.SOLID)
         self.count_entry.grid(row=1, column=0, padx=5)
 
         self.lbl_2 = tk.Label(self.input_frame, text="name")
         self.lbl_2.grid(row=0, column=1)
         self.task_name_entry = tk.Entry(
-            self.input_frame, width=25, borderwidth="1", relief=tk.SOLID)
+            self.input_frame, width=25, borderwidth=1, relief=tk.SOLID)
         self.task_name_entry.grid(row=1, column=1, padx=5)
 
         self.lbl_3 = tk.Label(self.input_frame, text="description")
         self.lbl_3.grid(row=0, column=2)
         self.description_entry = tk.Entry(
-            self.input_frame, width=35, borderwidth="1", relief=tk.SOLID)
+            self.input_frame, width=35, borderwidth=1, relief=tk.SOLID)
         self.description_entry.grid(row=1, column=2, padx=5)
+        ###-----------
 
+        ###[Period]-----
+        self.period_frame = tk.Frame(self.input_frame)
+        self.period_frame.grid(row=3, column=0, columnspan=2, sticky=tk.E+tk.W)
+        self.lbl_pf = tk.Label(self.period_frame, text="From")
+        self.lbl_pf.grid(row=0,column=0)
+        self.period_from_entry = tk.Entry(
+            self.period_frame, width=10, borderwidth=1, relief=tk.SOLID)
+        self.period_from_entry.grid(row=1, column=0, padx=5)
+        self.lbl_pt = tk.Label(self.period_frame, text="To")
+        self.lbl_pt.grid(row=0, column=1)
+        self.period_to_entry = tk.Entry(
+            self.period_frame, width=10, borderwidth=1, relief=tk.SOLID)
+        self.period_to_entry.grid(row=1, column=1, padx=5)
+        self.lbl_remains = tk.Label(self.period_frame, text="Remains")
+        self.lbl_remains.grid(row=0, column=2, padx=5)
+        self.period_remains_entry = tk.Entry(self.period_frame, width=5, borderwidth=1, relief=tk.SOLID)
+        self.period_remains_entry.grid(row=1, column=2, padx=5)
+        ###-----------
+
+        ###[Function Button]
         self.func_btn_frame = tk.Frame(self.input_frame)
         self.func_btn_frame.grid(row=3, column=2, pady=10)
 
@@ -251,7 +273,7 @@ class Application(tk.Frame):
         self.btn_quit = tk.Button(
             self.func_btn_frame, text="Quit", width=8, command=self.quit_app)
         self.btn_quit.grid(row=1, column=2)
-
+        ###-----------
 
 root = tk.Tk()
 root.title("single_counter")
