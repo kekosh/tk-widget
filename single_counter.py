@@ -20,7 +20,10 @@ class Application(tk.Frame):
         if isexist:
             pass
         else:
-            sampledata = {"data":{"sampleXXX":{"count":3,"memo":"No data Sample."}}}
+            sampledata = {"data":
+                {"sampleXXX":
+                    {"count":3,"memo":"No data Sample.","from":"1900/01/01","to":"3999/12/31"}}}
+
             with open(json_path, "w+") as f:
                 json.dump(sampledata, f, indent=4)
 
@@ -123,6 +126,12 @@ class Application(tk.Frame):
         self.task_name_entry.insert(tk.END, select_data_key)
         self.description_entry.insert(
             tk.END, json_data["data"][select_data_key]["memo"])
+        self.period_from_entry.insert(
+            tk.END, json_data["data"][select_data_key]["from"])
+        self.period_to_entry.insert(
+            tk.END, json_data["data"][select_data_key]["to"])
+
+        ###[Now:日付を変換、計算して残日数を表示する]
 
     def delete_record(self):
         index, key, errmsg = self.get_oncursor()
@@ -146,6 +155,9 @@ class Application(tk.Frame):
         self.count_entry.delete(0, tk.END)
         self.task_name_entry.delete(0, tk.END)
         self.description_entry.delete(0, tk.END)
+        self.period_from_entry.delete(0, tk.END)
+        self.period_to_entry.delete(0, tk.END)
+        self.period_remains_entry.delete(0, tk.END)
 
     def update_count(self, key):
         """
