@@ -1,8 +1,9 @@
 import os
 import sys
-import tkinter as tk
 import json
+import datetime as dt
 import collections as cl
+import tkinter as tk
 from tkinter import messagebox
 
 
@@ -132,6 +133,18 @@ class Application(tk.Frame):
             tk.END, json_data["data"][select_data_key]["to"])
 
         ###[Now:日付を変換、計算して残日数を表示する]
+        #check_input_date_format
+        #cast_str_to_dtobj
+
+
+    def check_input_date_format(self,input):
+        pass
+
+    def cast_str_to_dtobj(self,str):
+        pass
+
+
+
 
     def delete_record(self):
         index, key, errmsg = self.get_oncursor()
