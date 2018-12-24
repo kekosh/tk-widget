@@ -134,8 +134,11 @@ class Application(tk.Frame):
         _from = dt.datetime.strptime(date_from, '%Y/%m/%d')
         _to = dt.datetime.strptime(date_to, '%Y/%m/%d')
 
-        to_minus_from = _to - _from
-        parse_str = str(to_minus_from).split(" ")
+        if _from == _to:
+            return "0"
+        else:
+            to_minus_from = _to - _from
+            parse_str = str(to_minus_from).split(" ")
         return str(parse_str[0])
 
     def cast_str_to_dtobj(self, str_date):
@@ -314,11 +317,16 @@ class Application(tk.Frame):
         self.period_to_entry = tk.Entry(
             self.period_frame, width=12, borderwidth=1, relief=tk.SOLID)
         self.period_to_entry.grid(row=1, column=1, padx=5)
-        self.lbl_remains = tk.Label(self.period_frame, text="Remains")
-        self.lbl_remains.grid(row=0, column=2, padx=5)
+        self.lbl_period = tk.Label(self.period_frame, text="Period")
+        self.lbl_period.grid(row=0, column=2)
         self.period_remains_entry = tk.Entry(
             self.period_frame, width=5, borderwidth=1, relief=tk.SOLID)
         self.period_remains_entry.grid(row=1, column=2, padx=5)
+        self.lbl_remains = tk.Label(self.period_frame, text="Remain")
+        self.lbl_remains.grid(row=0, column=3)
+        self.period_remains_entry = tk.Entry(
+            self.period_frame, width=5, borderwidth=1, relief=tk.SOLID)
+        self.period_remains_entry.grid(row=1, column=3, padx=5)
         ###-----------
 
         ###[Function Button]
