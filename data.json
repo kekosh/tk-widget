@@ -40,10 +40,6 @@
             "count": 6,
             "memo": "sam sam sample!!\""
         },
-        "sample24": {
-            "count": 24,
-            "memo": "sam sam sample!!"
-        },
         "sample30": {
             "count": 20,
             "memo": "sam sam sample!!"
@@ -66,7 +62,10 @@
         },
         "sample150": {
             "count": 15,
-            "memo": "sam sam sample!!"
+            "memo": "sam sam sample!!",
+            "from": "2019/04/01",
+            "to": "2018/05/10",
+            "remians": "-326"
         }
     }
 }

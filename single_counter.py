@@ -22,8 +22,8 @@ class Application(tk.Frame):
             pass
         else:
             sampledata = {"data":
-                {"sampleXXX":
-                    {"count":3,"memo":"No data Sample.","from":"1900/01/01","to":"3999/12/31"}}}
+                          {"sampleXXX":
+                           {"count": 3, "memo": "No data Sample.", "from": "1900/01/01", "to": "3999/12/31"}}}
 
             with open(json_path, "w+") as f:
                 json.dump(sampledata, f, indent=4)
@@ -66,16 +66,41 @@ class Application(tk.Frame):
         count = self.count_entry.get()
         task_name = self.task_name_entry.get()
         description = self.description_entry.get()
+        period_from = self.period_from_entry.get()
+        period_to = self.period_to_entry.get()
 
-        ### キャストと入力チェック
+        ###キャストと入力チェック
         count, err = self.check_and_cast_inputs(count, task_name)
         if len(err) > 0:
             messagebox.showerror(title="Warning!!", message=err)
             return
 
+        ###fromとtoの整合性確認
+        retmsg = self.consist_tofrom(period_from, period_to)
+        if retmsg is not None:
+            messagebox.showwarning("Warning!!", retmsg)
+            return
+
+        #check_input_date_format
+        retmsg = self.cast_str_to_dtobj(period_from)
+        if retmsg is not None:
+            messagebox.showerror("Error!!", retmsg)
+            return
+
+        retmsg = self.cast_str_to_dtobj(period_to)
+        if retmsg is not None:
+            messagebox.showerror("Error!!", retmsg)
+            return
+
+        _remains = self.calc_remains(period_from, period_to)
+
+        self.period_remains_entry.delete(0, tk.END)
+        self.period_remains_entry.insert(tk.END, _remains)
+
         ###データ登録用オブジェクト作成
         odict_data = cl.OrderedDict()
-        odict_data = {"count": int(count), "memo": description}
+        odict_data = {"count": int(count), "memo": description,
+                      "from": period_from, "to": period_to, "remians": _remains}
 
         odict_shell = cl.OrderedDict()
         odict_shell["data"] = odict_data
@@ -95,6 +120,39 @@ class Application(tk.Frame):
             json.dump(load_data, f, indent=4)
 
         messagebox.showinfo(title="Infomation", message="complete!!")
+
+    def consist_tofrom(self, _from, _to):
+        errmsg = None
+        date_from = dt.datetime.strptime(_from, '%Y/%m/%d')
+        date_to = dt.datetime.strptime(_to, '%Y/%m/%d')
+
+        if date_to < date_from:
+            errmsg = "'To' date is ahead of 'From' "
+        return errmsg
+
+    def calc_remains(self, date_from, date_to):
+        _from = dt.datetime.strptime(date_from, '%Y/%m/%d')
+        _to = dt.datetime.strptime(date_to, '%Y/%m/%d')
+
+        to_minus_from = _to - _from
+        parse_str = str(to_minus_from).split(" ")
+        return str(parse_str[0])
+
+    def cast_str_to_dtobj(self, str_date):
+        try:
+            #stringをdatetimeにパースすると時分秒が付与される(00:00:00)
+            cast_date = dt.datetime.strptime(str_date, '%Y/%m/%d')
+            date_ymd, date_time = str(cast_date).split(" ")
+            date_ymd = date_ymd.replace("-", "/")
+            errmsg = None
+        except:
+            #変換でエラーが発生した場合は入力値をそのまま返す
+            date_ymd = str_date
+            errmsg = "error is occured on string to date parse function.＜{0}＞".format(
+                str_date)
+        finally:
+            return errmsg
+    """ ここまで """
 
     def get_oncursor(self):
         index = select_data_key = errmsg = ""
@@ -131,20 +189,6 @@ class Application(tk.Frame):
             tk.END, json_data["data"][select_data_key]["from"])
         self.period_to_entry.insert(
             tk.END, json_data["data"][select_data_key]["to"])
-
-        ###[Now:日付を変換、計算して残日数を表示する]
-        #check_input_date_format
-        #cast_str_to_dtobj
-
-
-    def check_input_date_format(self,input):
-        pass
-
-    def cast_str_to_dtobj(self,str):
-        pass
-
-
-
 
     def delete_record(self):
         index, key, errmsg = self.get_oncursor()
@@ -261,18 +305,19 @@ class Application(tk.Frame):
         self.period_frame = tk.Frame(self.input_frame)
         self.period_frame.grid(row=3, column=0, columnspan=2, sticky=tk.E+tk.W)
         self.lbl_pf = tk.Label(self.period_frame, text="From")
-        self.lbl_pf.grid(row=0,column=0)
+        self.lbl_pf.grid(row=0, column=0)
         self.period_from_entry = tk.Entry(
-            self.period_frame, width=10, borderwidth=1, relief=tk.SOLID)
+            self.period_frame, width=12, borderwidth=1, relief=tk.SOLID)
         self.period_from_entry.grid(row=1, column=0, padx=5)
         self.lbl_pt = tk.Label(self.period_frame, text="To")
         self.lbl_pt.grid(row=0, column=1)
         self.period_to_entry = tk.Entry(
-            self.period_frame, width=10, borderwidth=1, relief=tk.SOLID)
+            self.period_frame, width=12, borderwidth=1, relief=tk.SOLID)
         self.period_to_entry.grid(row=1, column=1, padx=5)
         self.lbl_remains = tk.Label(self.period_frame, text="Remains")
         self.lbl_remains.grid(row=0, column=2, padx=5)
-        self.period_remains_entry = tk.Entry(self.period_frame, width=5, borderwidth=1, relief=tk.SOLID)
+        self.period_remains_entry = tk.Entry(
+            self.period_frame, width=5, borderwidth=1, relief=tk.SOLID)
         self.period_remains_entry.grid(row=1, column=2, padx=5)
         ###-----------
 
@@ -299,6 +344,7 @@ class Application(tk.Frame):
             self.func_btn_frame, text="Quit", width=8, command=self.quit_app)
         self.btn_quit.grid(row=1, column=2)
         ###-----------
+
 
 root = tk.Tk()
 root.title("single_counter")
