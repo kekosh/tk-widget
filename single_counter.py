@@ -75,12 +75,6 @@ class Application(tk.Frame):
             messagebox.showerror(title="Warning!!", message=err)
             return
 
-        ###fromとtoの整合性確認
-        retmsg = self.consist_tofrom(period_from, period_to)
-        if retmsg is not None:
-            messagebox.showwarning("Warning!!", retmsg)
-            return
-
         #check_input_date_format
         retmsg = self.cast_str_to_dtobj(period_from)
         if retmsg is not None:
@@ -92,10 +86,16 @@ class Application(tk.Frame):
             messagebox.showerror("Error!!", retmsg)
             return
 
+        ###fromとtoの整合性確認
+        retmsg = self.consist_tofrom(period_from, period_to)
+        if retmsg is not None:
+            messagebox.showwarning("Warning!!", retmsg)
+            return
+
         _remains = self.calc_remains(period_from, period_to)
 
-        self.period_remains_entry.delete(0, tk.END)
-        self.period_remains_entry.insert(tk.END, _remains)
+        self.period_entry.delete(0, tk.END)
+        self.period_entry.insert(tk.END, _remains)
 
         ###データ登録用オブジェクト作成
         odict_data = cl.OrderedDict()
@@ -319,9 +319,9 @@ class Application(tk.Frame):
         self.period_to_entry.grid(row=1, column=1, padx=5)
         self.lbl_period = tk.Label(self.period_frame, text="Period")
         self.lbl_period.grid(row=0, column=2)
-        self.period_remains_entry = tk.Entry(
+        self.period_entry = tk.Entry(
             self.period_frame, width=5, borderwidth=1, relief=tk.SOLID)
-        self.period_remains_entry.grid(row=1, column=2, padx=5)
+        self.period_entry.grid(row=1, column=2, padx=5)
         self.lbl_remains = tk.Label(self.period_frame, text="Remain")
         self.lbl_remains.grid(row=0, column=3)
         self.period_remains_entry = tk.Entry(
