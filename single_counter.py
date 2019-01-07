@@ -100,7 +100,7 @@ class Application(tk.Frame):
         ###データ登録用オブジェクト作成
         odict_data = cl.OrderedDict()
         odict_data = {"count": int(count), "memo": description,
-                      "from": period_from, "to": period_to, "remians": _remains}
+                      "from": period_from, "to": period_to, "remains": _remains}
 
         odict_shell = cl.OrderedDict()
         odict_shell["data"] = odict_data
